@@ -6,12 +6,12 @@ import GooglePhotos from "../assets/googlephotos.svg";
 import downloadIcon from "../assets/download.svg";
 import { Upload } from "react-feather";
 
-
 export default function UploadComponent() {
   const [images, setImages] = useState([]);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
 
+  // Load images from localStorage when the component mounts
   useEffect(() => {
     const savedImages = localStorage.getItem("uploadedImages");
     if (savedImages) {
@@ -19,8 +19,11 @@ export default function UploadComponent() {
     }
   }, []);
 
+  // Save images to localStorage whenever the images state changes
   useEffect(() => {
-    localStorage.setItem("uploadedImages", JSON.stringify(images));
+    if (images.length > 0) {
+      localStorage.setItem("uploadedImages", JSON.stringify(images));
+    }
   }, [images]);
 
   const handleImageUpload = (event) => {
@@ -73,7 +76,7 @@ export default function UploadComponent() {
     e.preventDefault();
     setIsDragging(false);
     const droppedFiles = Array.from(e.dataTransfer.files).filter((file) =>
-      file.type.startsWith("image/")
+      file.type.startsWith("image/") // Accept only image files
     );
     const imageURLs = droppedFiles.map((file) => URL.createObjectURL(file));
     setImages((prev) => [...prev, ...imageURLs]);
