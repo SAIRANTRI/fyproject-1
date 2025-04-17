@@ -26,13 +26,24 @@ export default function UploadComponent() {
     }
   }, [images]);
 
-  const handleImageUpload = (event) => {
-    const uploadedImages = Array.from(event.target.files).map((file) =>
-      URL.createObjectURL(file)
-    );
-    setImages((prev) => [...prev, ...uploadedImages]);
+  const handleImageUpload = async (event) => {
+    const files = Array.from(event.target.files);
+  
+    const base64Promises = files.map((file) => {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    });
+  
+    const base64Images = await Promise.all(base64Promises);
+  
+    setImages((prev) => [...prev, ...base64Images]);
     simulateUploadProgress();
   };
+  
 
   const simulateUploadProgress = () => {
     let progress = 0;
@@ -72,16 +83,29 @@ export default function UploadComponent() {
     setIsDragging(false);
   };
 
-  const handleDrop = (e) => {
+  const handleDrop = async (e) => {
     e.preventDefault();
     setIsDragging(false);
+  
     const droppedFiles = Array.from(e.dataTransfer.files).filter((file) =>
-      file.type.startsWith("image/") // Accept only image files
+      file.type.startsWith("image/")
     );
-    const imageURLs = droppedFiles.map((file) => URL.createObjectURL(file));
-    setImages((prev) => [...prev, ...imageURLs]);
+  
+    const base64Promises = droppedFiles.map((file) => {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    });
+  
+    const base64Images = await Promise.all(base64Promises);
+  
+    setImages((prev) => [...prev, ...base64Images]);
     simulateUploadProgress();
   };
+  
 
   return (
     <div className="min-h-screen text-white flex flex-col pb-28 items-center">

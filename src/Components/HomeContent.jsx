@@ -34,6 +34,12 @@ const HomeContent = () => {
                         Upload Image
                     </Button> 
                 </NavLink>
+                <NavLink to="/signup">
+                    <Button className="bg-purple-600 text-white hover:bg-purple-700 text-lg px-8 py-4">
+                        <Upload className="w-5 h-5" />
+                         Signup
+                    </Button> 
+                </NavLink>
                 <Button className="border border-purple-500 text-purple-500 hover:bg-purple-500/10 text-lg px-8 py-4">
                     Learn More
                 </Button>
