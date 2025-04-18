@@ -17,11 +17,12 @@ function App() {
       }}
     >
       {/* Header stays at the top */}
-      <div className=" w-full flex justify-center px-5">
+      <div className="w-full flex justify-center px-5">
         <Header />
       </div>
 
-      <div className=" w-full flex flex-grow justify-center pb-0">
+      {/* Scrollable Main Content */}
+      <div className="w-full flex-grow flex justify-center overflow-auto px-5">
         <Outlet />
       </div>
 
@@ -34,4 +35,3 @@ function App() {
 }
 
 export default App;
-

@@ -128,13 +128,15 @@ export default function UploadComponent() {
           </button>
         </div>
 
-        <h1 className="text-5xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500">
+        <div className="flex flex-col items-center w-full">
+
+        <h1 className="text-2xl font-bold mb-8 text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500">
           Upload Images
         </h1>
 
         {/* Drag and Drop */}
         <div
-          className={`w-full max-w-[1048px] border-2 border-dashed border-gray-500 p-12 rounded-xl flex flex-col items-center justify-center transition-all duration-300 bg-transparent hover:bg-gray-800/20 cursor-pointer ${
+          className={`mt-10 w-full max-w-[1048px] border-2 border-dashed border-gray-500 p-12 rounded-xl flex flex-col items-center justify-center transition-all duration-300 bg-transparent hover:bg-gray-800/20 cursor-pointer ${
             isDragging ? "scale-105 border-purple-500 bg-gray-800/10" : ""
           }`}
           onDragOver={handleDragOver}
@@ -158,6 +160,8 @@ export default function UploadComponent() {
             id="imageUpload"
             accept="image/*"
           />
+        </div>
+
         </div>
 
         {/* Gallery */}
